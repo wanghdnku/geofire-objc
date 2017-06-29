@@ -31,3 +31,6 @@ DerivedData
 
 # build
 /target
+
+/Pods
+*.xcworkspace
