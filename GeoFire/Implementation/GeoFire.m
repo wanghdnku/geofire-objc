@@ -29,9 +29,7 @@ enum {
 
 - (id)init
 {
-    [NSException raise:NSGenericException
-                format:@"init is not supported. Please use %@ instead",
-     NSStringFromSelector(@selector(initWithFirebaseRef:))];
+    [NSException raise:NSGenericException format:@"init is not supported. Please use %@ instead", NSStringFromSelector(@selector(initWithFirebaseRef:))];
     return nil;
 }
 
@@ -53,18 +51,12 @@ enum {
     [self setLocation:location forKey:key withCompletionBlock:nil];
 }
 
-- (void)setLocation:(CLLocation *)location
-             forKey:(NSString *)key
-withCompletionBlock:(GFCompletionBlock)block
+- (void)setLocation:(CLLocation *)location forKey:(NSString *)key withCompletionBlock:(GFCompletionBlock)block
 {
     if (!CLLocationCoordinate2DIsValid(location.coordinate)) {
-        [NSException raise:NSInvalidArgumentException
-                    format:@"Not a valid coordinate: [%f, %f]",
-         location.coordinate.latitude, location.coordinate.longitude];
+        [NSException raise:NSInvalidArgumentException format:@"Not a valid coordinate: [%f, %f]", location.coordinate.latitude, location.coordinate.longitude];
     }
-    [self setLocationValue:location
-                    forKey:key
-                 withBlock:block];
+    [self setLocationValue:location forKey:key withBlock:block];
 }
 
 - (FIRDatabaseReference *)firebaseRefForLocationKey:(NSString *)key
@@ -75,21 +67,18 @@ withCompletionBlock:(GFCompletionBlock)block
         illegalCharacters = [NSCharacterSet characterSetWithCharactersInString:@".#$][/"];
     });
     if ([key rangeOfCharacterFromSet:illegalCharacters].location != NSNotFound) {
-        [NSException raise:NSInvalidArgumentException
-                    format:@"Not a valid GeoFire key: \"%@\". Characters .#$][/ not allowed in key!", key];
+        [NSException raise:NSInvalidArgumentException format:@"Not a valid GeoFire key: \"%@\". Characters .#$][/ not allowed in key!", key];
     }
     return [self.firebaseRef child:key];
 }
 
-- (void)setLocationValue:(CLLocation *)location
-                  forKey:(NSString *)key
-               withBlock:(GFCompletionBlock)block
+- (void)setLocationValue:(CLLocation *)location forKey:(NSString *)key withBlock:(GFCompletionBlock)block
 {
     NSDictionary *value;
     NSString *priority;
     if (location != nil) {
-        NSNumber *lat = [NSNumber numberWithDouble:location.coordinate.latitude];
-        NSNumber *lng = [NSNumber numberWithDouble:location.coordinate.longitude];
+        NSNumber *lat = @(location.coordinate.latitude);
+        NSNumber *lng = @(location.coordinate.longitude);
         NSString *geoHash = [GFGeoHash newWithLocation:location.coordinate].geoHashValue;
         value = @{ @"l": @[ lat, lng ], @"g": geoHash };
         priority = geoHash;
@@ -97,9 +86,7 @@ withCompletionBlock:(GFCompletionBlock)block
         value = nil;
         priority = nil;
     }
-    [[self firebaseRefForLocationKey:key] setValue:value
-                                       andPriority:priority
-                               withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+    [[self firebaseRefForLocationKey:key] setValue:value andPriority:priority withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
         if (block != nil) {
             dispatch_async(self.callbackQueue, ^{
                 block(error);
@@ -140,9 +127,7 @@ withCompletionBlock:(GFCompletionBlock)block
 
 - (void)getLocationForKey:(NSString *)key withCallback:(GFCallbackBlock)callback
 {
-    [[self firebaseRefForLocationKey:key]
-     observeSingleEventOfType:FIRDataEventTypeValue
-     withBlock:^(FIRDataSnapshot *snapshot) {
+    [[self firebaseRefForLocationKey:key] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
          dispatch_async(self.callbackQueue, ^{
              if (snapshot.value == nil || [snapshot.value isMemberOfClass:[NSNull class]]) {
                  callback(nil, nil);

@@ -70,8 +70,7 @@ typedef void (^GFCallbackBlock) (CLLocation *location, NSError *error);
  * @param location The location as a geographic coordinate
  * @param key The key for which this location is saved
  */
-- (void)setLocation:(CLLocation *)location
-             forKey:(NSString *)key;
+- (void)setLocation:(CLLocation *)location forKey:(NSString *)key;
 
 /**
  * Updates the location for a key and calls the completion callback once the location was successfully updated on the
@@ -80,9 +79,7 @@ typedef void (^GFCallbackBlock) (CLLocation *location, NSError *error);
  * @param key The key for which this location is saved
  * @param block The completion block that is called once the location was successfully updated on the server
  */
-- (void)setLocation:(CLLocation *)location
-             forKey:(NSString *)key
-withCompletionBlock:(GFCompletionBlock)block;
+- (void)setLocation:(CLLocation *)location forKey:(NSString *)key withCompletionBlock:(GFCompletionBlock)block;
 
 /**
  * Removes the location for a given key.
@@ -107,8 +104,7 @@ withCompletionBlock:(GFCompletionBlock)block;
  * @param callback The callback that is called for the current location
  * @return
  */
-- (void)getLocationForKey:(NSString *)key
-             withCallback:(GFCallbackBlock)callback;
+- (void)getLocationForKey:(NSString *)key withCallback:(GFCallbackBlock)callback;
 
 /**
  * Creates a new GeoFire query centered at a given location with a given radius. The GFQuery object can be used to query
@@ -117,8 +113,7 @@ withCompletionBlock:(GFCompletionBlock)block;
  * @param radius The radius in kilometers of the geo query
  * @return The GFCircleQuery object that can be used for geo queries.
  */
-- (GFCircleQuery *)queryAtLocation:(CLLocation *)location
-                        withRadius:(double)radius;
+- (GFCircleQuery *)queryAtLocation:(CLLocation *)location withRadius:(double)radius;
 
 /**
  * Creates a new GeoFire query for a given region. The GFQuery object can be used to query

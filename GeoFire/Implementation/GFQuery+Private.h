@@ -26,9 +26,7 @@
 
 @interface GFCircleQuery (Private)
 
-- (id)initWithGeoFire:(GeoFire *)geoFire
-             location:(CLLocation *)location
-               radius:(double)radius;
+- (id)initWithGeoFire:(GeoFire *)geoFire location:(CLLocation *)location radius:(double)radius;
 
 @end
 

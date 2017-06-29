@@ -39,6 +39,9 @@
 
 @end
 
+
+#pragma mark - CFCircleQUery
+
 @interface GFCircleQuery ()
 
 @property (nonatomic, strong) CLLocation *centerLocation;
@@ -113,6 +116,9 @@
 
 @end
 
+
+#pragma mark - CFRegionQuery
+
 @interface GFRegionQuery ()
 
 @end
@@ -166,6 +172,8 @@
 
 @end
 
+
+#pragma mark - CFQuery
 
 @interface GFQuery ()
 
