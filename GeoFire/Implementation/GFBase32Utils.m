@@ -31,7 +31,7 @@ static const char BASE_32_CHARS[] = "0123456789bcdefghjkmnpqrstuvwxyz";
     return 0;
 }
 
-+ (NSString *)base32Characters{
++ (NSString *)base32Characters {
     static dispatch_once_t onceToken;
     static NSString *chars = nil;
     dispatch_once(&onceToken, ^{
